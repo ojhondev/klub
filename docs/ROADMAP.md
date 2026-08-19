@@ -87,14 +87,29 @@ XP por uma ação e subir de nível — tudo refletido na tela de Membros.
 
 ---
 
-## Fase 3 — Benefícios + cadastro de produto (link manual)
+## Fase 3 — Benefícios + cadastro de produto (link manual) ✅ concluída (2026-08-19)
 
-- **Benefícios** (substituir o placeholder): CRUD dos tipos definidos no PRD §4.4
-  (cupom, cashback, frete grátis, brinde, desconto, produto exclusivo, acesso
-  antecipado), com o público-alvo por nível.
-- **Cadastro de produto via link** — formulário onde o lojista cola o link do produto
-  (Shopify/Nuvemshop) e preenche título/imagem/preço manualmente, conforme decisão do
-  PRD §6. Sem isso, Drops (Fase 4) não tem o que vincular.
+- ✅ **Benefícios** (substituiu o placeholder): CRUD (criar/remover) dos 7 tipos do
+  PRD §4.4 (cupom, cashback, frete grátis, brinde, desconto, produto exclusivo,
+  acesso antecipado), com público-alvo por nível (ou "Todos os níveis") —
+  `src/app/(lojista)/beneficios/`.
+- ✅ **Cadastro de produto via link** — nova tabela `produtos` (nome, preço, link,
+  imagem) e tela em **Configurações** (que também deixou de ser placeholder) —
+  `src/app/(lojista)/configuracoes/`. Decisão de IA: produto não ganhou item próprio
+  na sidebar (ficaria fora dos 8 pilares do PRD) — mora em Configurações, de onde
+  Drops (Fase 4) vai puxar.
+- ✅ **Ajuste de schema não previsto no roadmap original:** `drops.produtoNome` +
+  `drops.produtoLink` (texto livre, do desenho inicial do Fase 0) foram substituídos
+  por `drops.produtoId` (referência a `produtos`), já que agora existe uma entidade de
+  produto de verdade para Drops referenciar em vez de repetir texto solto por drop.
+  Migração feita em duas etapas (`0002`/`0003`) para evitar a detecção ambígua de
+  "rename" do drizzle-kit ao remover+adicionar colunas na mesma tabela — tabela
+  `drops` estava vazia, sem risco de perda de dado.
+
+**Verificado nesta sessão:** produto "Tênis Runner Pro" (R$399,90) cadastrado via
+link; nível "Platinum" criado e benefício "Frete grátis Platinum" associado a ele,
+aparecendo corretamente na listagem com o público-alvo certo; remoção testada e
+funcionando em ambos.
 
 **Pronto quando:** existe um benefício configurado e associado a um nível, e pelo
 menos um produto cadastrado via link pronto para ser usado num Drop.

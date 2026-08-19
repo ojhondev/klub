@@ -87,6 +87,18 @@ export const conquistas = pgTable("conquistas", {
   criterio: text("criterio"),
 });
 
+export const produtos = pgTable("produtos", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  lojaId: uuid("loja_id")
+    .notNull()
+    .references(() => lojas.id, { onDelete: "cascade" }),
+  nome: text("nome").notNull(),
+  preco: numeric("preco", { precision: 12, scale: 2 }),
+  imagemUrl: text("imagem_url"),
+  link: text("link").notNull(),
+  criadoEm: timestamp("criado_em").notNull().defaultNow(),
+});
+
 export const beneficios = pgTable("beneficios", {
   id: uuid("id").primaryKey().defaultRandom(),
   lojaId: uuid("loja_id")
@@ -106,8 +118,9 @@ export const drops = pgTable("drops", {
   lojaId: uuid("loja_id")
     .notNull()
     .references(() => lojas.id, { onDelete: "cascade" }),
-  produtoNome: text("produto_nome").notNull(),
-  produtoLink: text("produto_link"),
+  produtoId: uuid("produto_id")
+    .notNull()
+    .references(() => produtos.id, { onDelete: "cascade" }),
   dataLiberacao: timestamp("data_liberacao").notNull(),
   nivelMinimoId: uuid("nivel_minimo_id").references(() => niveis.id, {
     onDelete: "set null",
