@@ -48,23 +48,38 @@ ver que os dados de uma não vazam pra outra.
 
 ---
 
-## Fase 2 — Membros (CRM) + Gamificação
+## Fase 2 — Membros (CRM) + Gamificação ✅ concluída (2026-08-19)
 
 As duas telas que sustentam o pilar **Rewards** — e o que dá ao lojista algo
 imediatamente útil de configurar.
 
-- **Gamificação** (substituir o placeholder): CRUD de Níveis (nome, ícone, XP
-  necessário, ordem) e de Regras de XP (ação → valor). Conquistas fica podendo entrar
-  nesta fase ou na seguinte, dependendo do apetite.
-- **Membros** (substituir o placeholder): listagem real dos membros da loja com os
-  filtros do PRD §4.2 (VIP, inativos, novos, recorrentes, top clientes) e o perfil
-  individual do membro (nível, XP, compras, cupons, indicações, UGC).
-- **Página pública de adesão** (decisão do PRD §5.0, 2026-08-19) — rota pública
-  `klub-one.vercel.app/j/<slug-da-loja>` (sem login de lojista) onde o cliente final se
-  cadastra (nome + e-mail, sem senha no MVP) e vira `membro` da loja. É o canal
-  principal de aquisição — sem isso, Membros/Drops/Comunidade não têm quem usar.
-  Cadastro manual pelo lojista continua existindo como complemento, não como canal
-  principal.
+- ✅ **Gamificação** (substituiu o placeholder): CRUD de Níveis (ícone, nome, XP
+  necessário, ordem) e de Regras de XP (ação → valor + descrição) —
+  `src/app/(lojista)/gamificacao/`. Criar + remover implementados; editar in-place
+  ficou de fora do escopo (recriar via remover+adicionar cobre o MVP). Conquistas
+  adiada — não entrou nesta fase.
+- ✅ **Membros** (substituiu o placeholder): listagem real com os filtros do PRD §4.2
+  (Todos/VIP/Inativos/Novos/Recorrentes/Top clientes, via `?filtro=`) e perfil
+  individual (`/membros/[id]`) com nível, XP e histórico de compras —
+  `src/lib/queries/membros.ts`. VIP = membros no nível de maior `ordem`; Inativos =
+  sem compra nos últimos 90 dias; Recorrentes = 2+ compras. Cupons/indicações/UGC no
+  perfil ficam pra quando essas fases existirem (Fase 3/5/6).
+- ✅ **Página pública de adesão** (decisão do PRD §5.0) — `src/app/j/[slug]/page.tsx`,
+  fora dos route groups `(auth)`/`(lojista)` (pública, sem sessão). Cliente se
+  cadastra com nome+e-mail, vira `membro` já no nível inicial (menor `ordem`), sem
+  duplicar por e-mail. Link exibido e clicável direto na tela de Membros do lojista.
+- ✅ **Registrar ação** (adição não prevista no roadmap original, necessária pra
+  fechar o loop de ponta a ponta sem esperar a Fase 9/integração real) — botão no
+  perfil do membro que aplica a regra de XP de uma ação (`src/lib/gamificacao.ts` →
+  `resolveNivel`) e, se a ação for "compra", registra em `compras` com
+  `origem: "direta"`. É o substituto manual do webhook de pedido que não existe no
+  MVP — mesma lógica de "link manual" já adotada em outras partes do PRD.
+
+**Verificado nesta sessão, ponta a ponta:** criar 2 níveis (Bronze 0 XP, Gold 300 XP)
++ 1 regra (Comprar → +100 XP) → cliente se cadastra via `/j/<slug>` e entra em Bronze
+→ aparece em Membros → 3 "compras" registradas via "Registrar ação" somam 300 XP →
+sobe automaticamente para Gold → filtros VIP e Recorrentes retornam o membro
+corretamente → Dashboard reflete a receita e taxa de recompra reais.
 
 **Pronto quando:** um cliente consegue entrar em `/j/<slug>`, se cadastrar, e aparecer
 na lista de Membros do lojista; o lojista consegue criar um nível, o membro acumular
