@@ -17,20 +17,31 @@
 
 ---
 
-## Fase 1 — Fundação: autenticação + tenant + dados reais
+## Fase 1 — Fundação: autenticação + tenant + dados reais ✅ concluída (2026-08-19)
 
 Sem isso, nada do resto pode sair do mock. É a fase mais estrutural e a que menos
 "aparece" visualmente.
 
-- **Login do lojista** — cadastro + login por e-mail/senha (cookie de sessão assinado +
-  scrypt, padrão do dev.md, antes de qualquer provedor externo).
-- **Onboarding da loja** — ao logar pela primeira vez, criar o registro em `lojas`
-  (nome, slug, plano) e vincular o usuário a ela.
-- **Resolução de tenant por sessão** — todo dado exibido no admin passa a vir filtrado
-  por `loja_id` da sessão logada, não mais mockado.
-- **Trocar o Dashboard de mock para real** — os 12 KPIs do §4.1 passam a ser
-  calculados a partir das tabelas reais (mesmo que a maioria comece zerada para uma
-  loja nova).
+- ✅ **Login do lojista** — cadastro (`/cadastro`) + login (`/login`) por e-mail/senha,
+  cookie de sessão assinado (HMAC-SHA256 + `SESSION_SECRET`) e hash de senha (scrypt),
+  sem provedor externo — `src/lib/auth/`.
+- ✅ **Onboarding da loja** — cadastro cria `lojas` (nome, slug único gerado
+  automaticamente, plano `basico` por padrão) e `usuarios` (vinculado à loja) na mesma
+  ação — `src/app/(auth)/actions.ts`.
+- ✅ **Resolução de tenant por sessão** — `(lojista)/layout.tsx` exige sessão válida
+  (`requireSession`, redireciona pra `/login` se ausente) e resolve `loja_id` a partir
+  dela; nome da loja exibido no header, com botão "Sair".
+- ✅ **Trocar o Dashboard de mock para real** — `src/lib/queries/dashboard.ts` calcula
+  os KPIs direto das tabelas (`membros`, `compras`, `posts`, `indicacoes`) filtrados por
+  `loja_id`. Numa loja nova a maioria vem zerada, como esperado; "LTV dos não membros"
+  e "CAC economizado" ficam como "—" porque não há fonte de dado pra eles ainda (MVP
+  sem webhook de pedido — ver PRD §11); Klub Growth Score também fica como "—" até
+  existir dado suficiente pra calcular a fórmula do PRD §4.1.
+
+**Verificado nesta sessão:** cadastro cria loja+usuário e loga automaticamente, logout
+limpa a sessão, login com credencial errada mostra erro, login correto volta ao
+dashboard. Isolamento entre lojas ainda não foi testado com duas contas simultâneas
+(fica pra Fase 2, quando `membros` reais existirem pra comparar).
 
 **Pronto quando:** dá pra criar duas contas de loja diferentes, logar em cada uma, e
 ver que os dados de uma não vazam pra outra.

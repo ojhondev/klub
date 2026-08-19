@@ -45,6 +45,17 @@ export const lojas = pgTable("lojas", {
   criadoEm: timestamp("criado_em").notNull().defaultNow(),
 });
 
+export const usuarios = pgTable("usuarios", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  lojaId: uuid("loja_id")
+    .notNull()
+    .references(() => lojas.id, { onDelete: "cascade" }),
+  nome: text("nome").notNull(),
+  email: text("email").notNull().unique(),
+  senhaHash: text("senha_hash").notNull(),
+  criadoEm: timestamp("criado_em").notNull().defaultNow(),
+});
+
 export const niveis = pgTable("niveis", {
   id: uuid("id").primaryKey().defaultRandom(),
   lojaId: uuid("loja_id")
