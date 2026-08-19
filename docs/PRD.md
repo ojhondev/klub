@@ -218,6 +218,25 @@ O lojista cria campanhas de referral, ex.: *"Indique um amigo. Seu amigo ganha R
 
 O app do membro é **mobile-first, web (sem PWA)** — UX com o mesmo padrão de acabamento do Hubla: navegação simples por abas, transições suaves, feedback visual imediato. Ver §6 para a decisão de design.
 
+### 5.0 Adesão — como um cliente vira membro (decisão, 2026-08-19)
+
+Gap identificado e fechado nesta versão: o lojista configura níveis, benefícios e drops,
+mas faltava definir como um cliente da loja efetivamente entra no Klub.
+
+**Decisão:** cada loja tem uma **página pública de adesão** própria, em uma URL fixa por
+loja (ex.: `klub.app/j/<slug-da-loja>`). O lojista divulga esse link pelos canais que já
+usa — Instagram, e-mail pós-compra, embalagem do produto, WhatsApp — e o cliente se
+cadastra sozinho (nome + e-mail, sem senha no MVP — ver §11). Ao se cadastrar, vira
+`membro` da loja e ganha o XP inicial de boas-vindas, se configurado.
+
+Alternativas consideradas e adiadas (não descartadas, só fora do MVP):
+- **Widget embedado na própria loja** (botão "Entrar no Klub" no site do lojista) —
+  exige integração mais profunda por plataforma; fica para quando houver integração
+  via API oficial (PRD §9/§10, fase "Escala").
+- **Cadastro manual pelo lojista** na aba Membros — continua existindo como
+  complemento (para popular a base já existente), mas não é o canal principal de
+  aquisição.
+
 ### 5.1 Home / Feed
 
 Feed único misturando: conteúdo fixado pela loja (posts, campanhas, produtos, desafios), UGC da comunidade, drops em andamento ou por vir, progresso de gamificação do próprio membro.
@@ -333,3 +352,4 @@ Loja (tenant)
 3. **Scraping do link de produto (Shopify/Nuvemshop)** — viável extrair título/imagem/preço automaticamente do link, ou o lojista preenche tudo manualmente no MVP?
 4. **Moderação de comunidade** — v1 é manual pelo lojista; a partir de que volume isso deixa de escalar e vira bloqueio de produto?
 5. **Rastreio de pedido originado pelo Klub sem webhook** — confirmar se cupom/UTM único por membro é suficiente para atribuir "pedido originado pelo Klub" com confiança, já que não há integração de pedidos via API no MVP.
+6. **Autenticação do membro na página de adesão (§5.0)** — o cadastro é só nome+e-mail (sem senha)? Se sim, como o membro acessa de novo depois (link mágico por e-mail? sessão que não expira?). Precisa de decisão antes de construir a Fase 7 (app do membro) — não bloqueia a Fase 2 (a página pública em si só precisa criar o registro em `membros`).

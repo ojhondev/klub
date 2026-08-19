@@ -59,12 +59,16 @@ imediatamente útil de configurar.
 - **Membros** (substituir o placeholder): listagem real dos membros da loja com os
   filtros do PRD §4.2 (VIP, inativos, novos, recorrentes, top clientes) e o perfil
   individual do membro (nível, XP, compras, cupons, indicações, UGC).
-- **Cadastro de membro** — hoje não existe forma de um cliente virar membro; precisa de
-  um fluxo mínimo (manual pelo lojista, ou auto-cadastro simples) para popular a
-  tabela `membros` com dados reais e testar a lógica de XP/nível.
+- **Página pública de adesão** (decisão do PRD §5.0, 2026-08-19) — rota pública
+  `klub-one.vercel.app/j/<slug-da-loja>` (sem login de lojista) onde o cliente final se
+  cadastra (nome + e-mail, sem senha no MVP) e vira `membro` da loja. É o canal
+  principal de aquisição — sem isso, Membros/Drops/Comunidade não têm quem usar.
+  Cadastro manual pelo lojista continua existindo como complemento, não como canal
+  principal.
 
-**Pronto quando:** o lojista consegue criar um nível, cadastrar um membro, ele
-acumular XP por uma ação e subir de nível — tudo refletido na tela de Membros.
+**Pronto quando:** um cliente consegue entrar em `/j/<slug>`, se cadastrar, e aparecer
+na lista de Membros do lojista; o lojista consegue criar um nível, o membro acumular
+XP por uma ação e subir de nível — tudo refletido na tela de Membros.
 
 ---
 
