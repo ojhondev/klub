@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+:root {
+  --color-bg: #0a0a0b;
+  --color-surface: #131316;
+  --color-surface-hover: #1a1a1e;
+  --color-border: #232327;
+  --color-fg: #f5f5f6;
+  --color-fg-muted: #9a9aa3;
+  --color-fg-subtle: #626269;
+  --color-accent: #cbf34e;
+  --color-accent-fg: #0a0a0b;
+  --color-danger: #ef4444;
+  --color-danger-bg: #2a1316;
+  --color-danger-border: #4c1d24;
+}
+
+@theme inline {
+  --color-bg: var(--color-bg);
+  --color-surface: var(--color-surface);
+  --color-surface-hover: var(--color-surface-hover);
+  --color-border: var(--color-border);
+  --color-fg: var(--color-fg);
+  --color-fg-muted: var(--color-fg-muted);
+  --color-fg-subtle: var(--color-fg-subtle);
+  --color-accent: var(--color-accent);
+  --color-accent-fg: var(--color-accent-fg);
+  --color-danger: var(--color-danger);
+  --color-danger-bg: var(--color-danger-bg);
+  --color-danger-border: var(--color-danger-border);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+}
