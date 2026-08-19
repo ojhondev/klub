@@ -17,10 +17,9 @@ export default async function LojistaLayout({ children }: { children: ReactNode 
 
   return (
     <div className="flex min-h-screen">
-      <Sidebar />
+      <Sidebar lojaNome={loja?.nome} />
       <div className="flex flex-1 flex-col">
-        <header className="flex h-16 items-center justify-between border-b border-border px-8">
-          <p className="text-sm font-medium text-fg-muted">{loja?.nome}</p>
+        <header className="flex h-16 items-center justify-end border-b border-border px-8">
           <form action={signOut}>
             <button
               type="submit"

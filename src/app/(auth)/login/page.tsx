@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { KlubMark } from "@/components/brand/klub-mark";
 import { signIn } from "../actions";
 
 const ERROS: Record<string, string> = {
@@ -15,12 +16,7 @@ export default async function LoginPage({ searchParams }: PageProps<"/login">) {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center gap-2">
-        <span className="flex size-7 items-center justify-center rounded-md bg-accent text-sm font-bold text-accent-fg">
-          K
-        </span>
-        <span className="text-lg font-bold tracking-tight">Klub</span>
-      </div>
+      <KlubMark height={28} />
 
       <div>
         <h1 className="text-xl font-semibold tracking-tight">Entrar</h1>

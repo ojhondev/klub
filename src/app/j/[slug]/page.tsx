@@ -2,6 +2,7 @@ import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import { db } from "@/db";
 import { lojas } from "@/db/schema";
+import { KlubMark } from "@/components/brand/klub-mark";
 import { joinLoja } from "./actions";
 
 const inputClass =
@@ -24,12 +25,7 @@ export default async function JoinPage({ params, searchParams }: PageProps<"/j/[
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
       <div className="flex w-full max-w-sm flex-col gap-6">
-        <div className="flex items-center gap-2">
-          <span className="flex size-7 items-center justify-center rounded-md bg-accent text-sm font-bold text-accent-fg">
-            K
-          </span>
-          <span className="text-lg font-bold tracking-tight">Klub</span>
-        </div>
+        <KlubMark lojaNome={loja.nome} height={32} />
 
         {sucesso ? (
           <div className="flex flex-col gap-2">

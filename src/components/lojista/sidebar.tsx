@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { KlubMark } from "@/components/brand/klub-mark";
 import { mainNavItems, bottomNavItems, type NavItem } from "./nav-items";
 
 function NavLink({ item }: { item: NavItem }) {
@@ -24,14 +25,11 @@ function NavLink({ item }: { item: NavItem }) {
   );
 }
 
-export function Sidebar() {
+export function Sidebar({ lojaNome }: { lojaNome?: string }) {
   return (
     <aside className="flex h-screen w-60 shrink-0 flex-col border-r border-border px-4 py-6">
-      <div className="mb-8 flex items-center gap-2 px-2">
-        <span className="flex size-7 items-center justify-center rounded-md bg-accent text-sm font-bold text-accent-fg">
-          K
-        </span>
-        <span className="text-lg font-bold tracking-tight">Klub</span>
+      <div className="mb-8 px-2">
+        <KlubMark lojaNome={lojaNome} height={22} />
       </div>
 
       <nav className="flex flex-1 flex-col gap-1">
